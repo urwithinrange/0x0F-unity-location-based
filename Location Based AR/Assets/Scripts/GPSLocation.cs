@@ -16,6 +16,13 @@ public class GPSLocation : MonoBehaviour
     private Text LatitudeValue;
     [SerializeField]
     private Text AltitudeValue;
+
+    // Shiba prefab
+    [SerializeField]
+    private GameObject arCamera;
+    [SerializeField]
+    private GameObject Shiba;
+
     // private float count = 0;
     private Text AltitudeStored;
     private Text LongitudeStored;
@@ -54,6 +61,16 @@ public class GPSLocation : MonoBehaviour
             UnityPositionText.text = "Unity Position : (" + GPSEncoder.GPSToUCS(Input.location.lastData.latitude, Input.location.lastData.longitude).ToString() + ")";
         }
         // count += 1;
+    }
+    public void drawObject()
+    {
+            GameObject newObject = Instantiate(Shiba, new Vector3(arCamera.transform.position.x, arCamera.transform.position.y, arCamera.transform.position.z), Quaternion.identity);
+            Debug.Log("Object created at :" + newObject.transform.position);
+            newObject.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+            // newObject.transform.Rotate(0, 0, 50*Time.deltaTime);
+            VariableText.GetComponent<Text>().text = ("Created at: " + GPSEncoder.GPSToUCS(Input.location.lastData.latitude, Input.location.lastData.longitude).ToString());
+            newObject.transform.parent = GameObject.Find("Canvas").transform;  // Set the object as a child of the Canvas game object
+            Debug.Log("Shiba created");
     }
 
     public void applicationQuit()
